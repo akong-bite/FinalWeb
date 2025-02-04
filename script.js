@@ -1,32 +1,33 @@
 class ImageAnimationController {
     constructor() {
-      // Initialize core elements
       this.container = document.querySelector('.container');
       this.mainImage = document.querySelector('.main-image');
       this.cutoutImages = document.querySelectorAll('.cutout-image');
       
-      // Animation settings
+      // Updated animation settings for three images
       this.settings = {
-        startOffset: 0.2,  // When animations begin (percentage of viewport)
-        imageOffset: 0.15, // Spacing between image animations
-        diagonalStrength: 100, // How far images move diagonally
-        scaleRange: 0.05   // How much images scale down
+        startOffset: 0.1,  // Start animations earlier
+        imageOffset: 0.15, // Reduced spacing between animations
+        diagonalStrength: 80, // Reduced diagonal movement
+        scaleRange: 0.03,  // Subtle scale difference
+        maxMove: 50 // Maximum movement percentage of viewport height
+       
       };
+
+      
+      
   
       this.init();
     }
   
     init() {
-      // Store initial positions
       this.setupInitialPositions();
-      // Bind scroll handler
       window.addEventListener('scroll', () => {
         requestAnimationFrame(() => this.handleScroll());
       });
     }
   
     setupInitialPositions() {
-      // Store initial position of each cutout image
       this.cutoutImages.forEach((img, index) => {
         img.dataset.initialTop = img.offsetTop;
         img.dataset.initialLeft = img.offsetLeft;
@@ -37,29 +38,35 @@ class ImageAnimationController {
       const scrollTop = window.pageYOffset;
       const viewportHeight = window.innerHeight;
       const scrollProgress = scrollTop / viewportHeight;
+      const maxScroll = this.settings.maxMove / 100; // Convert percentage to decimal
   
-      // Animate main image with subtle parallax
-      this.mainImage.style.transform = `translate3d(0, ${scrollTop * 0.3}px, 0)`;
+      // Subtle parallax for main image
+      const mainImageMove = Math.min(scrollTop * 0.3, viewportHeight * 0.3);
+      this.mainImage.style.transform = `translate3d(0, ${mainImageMove}px, 0)`;
   
-      // Animate each cutout image
+      // Animate cutout images
       this.cutoutImages.forEach((img, index) => {
         const startPoint = this.settings.startOffset + (index * this.settings.imageOffset);
         
         if (scrollProgress > startPoint) {
-          // Calculate diagonal movement
-          const progressSinceStart = (scrollProgress - startPoint) / this.settings.imageOffset;
+          // Calculate bounded movement
+          const progressSinceStart = Math.min(
+            (scrollProgress - startPoint) / this.settings.imageOffset,
+            maxScroll
+          );
+          
+          // Calculate diagonal movement with bounds
           const moveX = this.settings.diagonalStrength * (index + 1) * progressSinceStart;
           const moveY = this.settings.diagonalStrength * (index + 1) * progressSinceStart;
-          const scale = 1 - (index * this.settings.scaleRange);
           
-          // Apply transform with easing
+          // Apply bounded transform
+          const scale = 1 - (index * this.settings.scaleRange);
           img.style.transform = `
             translate3d(${moveX}px, ${moveY}px, 0) 
             scale(${scale})
           `;
           img.style.opacity = Math.min(progressSinceStart * 2, 1);
         } else {
-          // Reset position when scrolling back up
           img.style.transform = 'translate3d(0, 0, 0) scale(1)';
           img.style.opacity = 0;
         }

@@ -1,6 +1,6 @@
 .container {
     position: relative;
-    height: 200vh; /* Makes the container scrollable */
+    height: 150vh; /* This sets a fixed height for the scrollable area */
     overflow: hidden;
   }
   
@@ -25,17 +25,17 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh; /* This ensures cutout images stay within viewport height */
+    pointer-events: none; /* Prevents images from interfering with scrolling */
   }
   
   .cutout-image {
     position: absolute;
-    width: 140px; /* Match your desired size */
+    width: 140px;
     height: auto;
     opacity: 0;
     will-change: transform, opacity;
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-    /* Initial position matching the main image */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
