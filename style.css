@@ -1,17 +1,26 @@
 .container {
     position: relative;
-    overflow-x: hidden;
+    height: 200vh; /* Makes the container scrollable */
+    overflow: hidden;
+  }
+  
+  .main-image-wrapper {
+    position: sticky;
+    top: 0;
+    width: 100%;
     height: 100vh;
+    overflow: hidden;
   }
   
   .main-image {
     width: 100%;
-    height: auto;
-    position: sticky;
-    top: 0;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+    transition: transform 0.3s ease-out;
   }
   
-  .cutout-images {
+  .cutout-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -21,14 +30,13 @@
   
   .cutout-image {
     position: absolute;
-    width: 120px;
+    width: 140px; /* Match your desired size */
     height: auto;
     opacity: 0;
-    transition: opacity 0.5s, transform 0.5s;
-  }
-  
-  .cutout-image-1 {
-    top: 0;
-    left: 0;
-    transform-origin: top left;
+    will-change: transform, opacity;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    /* Initial position matching the main image */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }

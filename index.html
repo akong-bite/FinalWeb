@@ -9,14 +9,34 @@
 <body>
 
     <div class="container">
-        <img src="https://optim.tildacdn.com/tild6535-6664-4262-b035-353739353331/-/format/webp/photo.jpg" class="main-image" alt="Main image">
-        <div class="cutout-images">
-          <img src="https://optim.tildacdn.com/tild6337-3537-4434-b937-633862323731/-/resize/140x/-/format/webp/Group_54.png" class="cutout-image cutout-image-1" alt="Cutout image 1">
-          <img src="https://optim.tildacdn.com/tild6337-3537-4434-b937-633862323731/-/resize/140x/-/format/webp/Group_54.png" class="cutout-image cutout-image-2" alt="Cutout image 2">
-          <img src="https://optim.tildacdn.com/tild6337-3537-4434-b937-633862323731/-/resize/140x/-/format/webp/Group_54.png" class="cutout-image cutout-image-3" alt="Cutout image 3">
-          <img src="https://optim.tildacdn.com/tild6337-3537-4434-b937-633862323731/-/resize/140x/-/format/webp/Group_54.png" class="cutout-image cutout-image-4" alt="Cutout image 4">
+        <!-- Main image with a specific class for targeting -->
+        <div class="main-image-wrapper">
+          <img 
+            src="https://optim.tildacdn.com/tild6535-6664-4262-b035-353739353331/-/format/webp/photo.jpg" 
+            class="main-image" 
+            alt="Main image"
+          >
         </div>
-    </div>
+      
+        <!-- Cutout images container -->
+        <div class="cutout-container">
+          <!-- Each cutout image gets a unique ID -->
+          <img 
+            src="https://optim.tildacdn.com/tild6337-3537-4434-b937-633862323731/-/resize/140x/-/format/webp/Group_54.png" 
+            id="cutout_1" 
+            class="cutout-image" 
+            alt="Cutout image 1"
+          >
+          <!-- Add more cutout images with incremental IDs -->
+          <img 
+            src="https://optim.tildacdn.com/tild6337-3537-4434-b937-633862323731/-/resize/140x/-/format/webp/Group_54.png" 
+            id="cutout_2" 
+            class="cutout-image" 
+            alt="Cutout image 2"
+          >
+          <!-- Add cutout_3 and cutout_4 similarly -->
+        </div>
+      </div>
 
     <script src="script.js"></script>
 </body>
