@@ -168,3 +168,22 @@ document.addEventListener('DOMContentLoaded', () => {
         new UberProjectScrollAnimation(projectSection);
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const introText = document.querySelector(".intro-container");
+
+    if (introText) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        introText.classList.add("visible");
+                    }
+                });
+            },
+            { threshold: 0.5 } // Trigger when 50% of the element is in view
+        );
+
+        observer.observe(introText);
+    }
+});

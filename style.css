@@ -9,6 +9,10 @@ body {
 }
 
 
+a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
 
 /* Container styles */
 .headcontainer {
@@ -150,7 +154,30 @@ body {
 
 
 
+/* Intro Container - Centering the Text */
+.intro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1200px; /* Adjust to position it over images */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 25%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #FCFBF6;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
 
+.intro-container.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
 
 
 
@@ -244,6 +271,7 @@ body {
     margin-right: 10%;
 }
 
+
 /* Project Images */
 .project img {
     width: 100%;
@@ -273,4 +301,47 @@ body {
     left: 50%;
     transform-origin: center center;
     will-change: transform, opacity;
+}
+
+.project-text {
+    position: absolute;
+    bottom: -80px; /* Adjust as needed */
+    width: 100%;
+    color: #FCFBF6;
+}
+
+.left-text {
+    text-align: left;
+    margin-left:1%;
+}
+
+.right-text {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.project-text h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-text p {
+    font-size: 16px;
+    color: #FCFBF6 ;
+    margin-top: -10px;
+    text-decoration: none !important;
+    color: inherit !important;
+    pointer-events: auto;
+}
+
+.project:hover img {
+    filter: blur(5px);
+    text-decoration: underline;
+}
+
+.project:hover .project-text h2,
+.project:hover .project-text p {
+    color: #CB3100 !important;
 }
