@@ -40,6 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 });
 
+// Simple scroll-based fade-in effect for images
+window.addEventListener("scroll", function () {
+    document.querySelectorAll(".image-container img").forEach((img) => {
+        if (img.getBoundingClientRect().top < window.innerHeight * 0.9) {
+            img.classList.add("appear");
+        }
+    });
+});
 
 
 
