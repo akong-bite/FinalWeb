@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
 document.addEventListener("DOMContentLoaded", function () {
     const introText = document.querySelector(".intro-container");
 
@@ -185,5 +186,66 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         observer.observe(introText);
+    }
+});
+
+class StoolCutoutScrollAnimation {
+    constructor(projectSection) {
+        this.projectSection = projectSection;
+        this.cutoutImage = projectSection.querySelector('.cutout-image-right');
+
+        // Scroll settings (same as your successful one)
+        this.settings = {
+            scrollSensitivity: 1,
+            lerpFactor: 0.06, // Smooth transition factor
+            maxTranslate: { x: -530, y: 0 } // Moves from right to left (-150px)
+        };
+
+        this.progress = 0;
+        this.targetProgress = 0;
+
+        this.init();
+    }
+
+    calculateScrollProgress() {
+        const rect = this.projectSection.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const progress = 1 - (rect.top / viewportHeight);
+        return Math.max(0, Math.min(progress * this.settings.scrollSensitivity, 1));
+    }
+
+    lerp(start, end, factor) {
+        return start + (end - start) * factor;
+    }
+
+    animateCutoutImage() {
+        this.progress = this.lerp(this.progress, this.targetProgress, this.settings.lerpFactor);
+
+        const translateX = this.progress * this.settings.maxTranslate.x;
+        const opacity = Math.min(this.progress * 2, 1);
+
+        this.cutoutImage.style.transform = `translateX(${translateX}px)`;
+        this.cutoutImage.style.opacity = opacity;
+
+        requestAnimationFrame(() => this.animateCutoutImage());
+    }
+
+    init() {
+        this.cutoutImage.style.transform = `translateX(100px)`; // Start off-screen right
+        this.cutoutImage.style.opacity = 0;
+
+        window.addEventListener('scroll', () => {
+            this.targetProgress = this.calculateScrollProgress();
+        });
+
+        this.animateCutoutImage();
+    }
+}
+
+// Initialize the animation when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const projectRight = document.querySelector(".project.right1");
+    if (projectRight) {
+        new StoolCutoutScrollAnimation(projectRight);
     }
 });

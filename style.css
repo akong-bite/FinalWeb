@@ -264,11 +264,33 @@ a {
 }
 
 
+
+/* Project Right - Keep Original Structure */
 .project.right1 {
     max-width: 860px;
     align-self: flex-end;
     margin-top: 10%;
     margin-right: 10%;
+    position: relative;
+    overflow: visible;
+}
+
+/* Cutout Image - Initially Off-Screen */
+.cutout-image-right {
+    position: absolute;
+    top: 68%;
+    right: -50px; /* Start slightly off-screen */
+    max-width: 120px;
+    height: auto;
+    opacity: 0;
+    transform: translateX(50px); /* Small initial movement */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Make Cutout Image Appear Smoothly */
+.project.right1.visible .cutout-image-right {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 
