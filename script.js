@@ -35,8 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.removeChild(videoContainer); // Remove the video container
         document.body.style.overflow = "auto"; // Enable scrolling
 
-    });
+        // Add a class to trigger CSS animations
+        document.querySelector(".headcontainer").classList.add("fade-in");
+    };
 });
+
+
+
+
 
 
 

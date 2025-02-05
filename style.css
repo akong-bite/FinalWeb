@@ -30,7 +30,7 @@ body {
 
 .headcontainer.fade-in {
     opacity: 1;
-    filter: blur(0);
+   filter: blur(0);
 }
 
 
@@ -157,6 +157,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     pointer-events: none;
+    
 }
 
 .image-container .wrench {
@@ -173,19 +174,15 @@ body {
     right: 0;
     scale: 0.95;
     z-index: -2;
+    
 }
 
 .image-container img {
     width: auto;
     height: auto;
     max-height: 100vh;
-    opacity: 0; /* Start fully hidden */
-    transform: translateY(50px);
-    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    opacity: 0.95;
 }
 
-/* Apply effect when scrolled into view */
-.image-container img.appear {
-    opacity: 1;
-    transform: translateY(0);
-}
+
+
