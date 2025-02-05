@@ -210,3 +210,67 @@ body {
 .image-container img:hover {
     filter: blur(10px);
 }
+
+/* Project Section - Positioned Below Wrench & Screw */
+.project-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding-top: 50vh; /* Pushes the section down below wrench & screw */
+    width: 100%;
+}
+
+/* Individual Project Containers */
+.project {
+    width: 100%;
+    position: relative;
+}
+
+/* Alternate left & right alignment */
+.project.left1 {
+    position: relative;
+    max-width: 660px;
+    align-self: flex-start;
+    margin-left: 4%;
+    overflow: visible; 
+}
+
+
+.project.right1 {
+    max-width: 860px;
+    align-self: flex-end;
+    margin-top: 10%;
+    margin-right: 10%;
+}
+
+/* Project Images */
+.project img {
+    width: 100%;
+    height: auto;
+    
+}
+
+
+
+.cutout-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 10;
+}
+
+.cutout-image {
+    position: absolute;
+    max-width: 350px; /* Set a limit */
+    width: 100%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    will-change: transform, opacity;
+}

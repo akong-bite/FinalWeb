@@ -65,86 +65,106 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+class UberProjectScrollAnimation {
+    constructor(projectSection) {
+        this.projectSection = projectSection;
+        this.mainImage = projectSection.querySelector('.project.left1 img');
+        this.cutoutImages = Array.from(projectSection.querySelectorAll('.cutout-image'));
 
+        // Scroll settings
+        this.settings = {
+            scrollSensitivity: 1,  // Adjust smoothness of scroll effect
+            lerpFactor: 0.06,  // Smoother transition using interpolation
+            cutoutImages: [
+                {
+                    id: 'cutout_1',
+                    initialOffset: { x: 0, y: 0 },
+                    maxTranslate: { x: 0, y: 200 }  // Now moves in X as well
+                },
+                {
+                    id: 'cutout_2',
+                    initialOffset: { x: 0, y: 50 },
+                    maxTranslate: { x: 120, y: 400 }
+                },
+                {
+                    id: 'cutout_3',
+                    initialOffset: { x: 0, y: 100 },
+                    maxTranslate: { x: 240, y: 600 }
+                }
+            ]
+        };
 
+        this.progress = 0; // Used for lerp
+        this.targetProgress = 0; // Target progress
 
-// class ImageAnimationController {
-//     constructor() {
-//       this.container = document.querySelector('.container');
-//       this.mainImage = document.querySelector('.main-image');
-//       this.cutoutImages = document.querySelectorAll('.cutout-image');
-      
-//       // Updated animation settings for three images
-//       this.settings = {
-//         startOffset: 0.1,  // Start animations earlier
-//         imageOffset: 0.15, // Reduced spacing between animations
-//         diagonalStrength: 80, // Reduced diagonal movement
-//         scaleRange: 0.03,  // Subtle scale difference
-//         maxMove: 50 // Maximum movement percentage of viewport height
-       
-//       };
+        this.init();
+    }
 
-      
-      
-  
-//       this.init();
-//     }
-  
-//     init() {
-//       this.setupInitialPositions();
-//       window.addEventListener('scroll', () => {
-//         requestAnimationFrame(() => this.handleScroll());
-//       });
-//     }
-  
-//     setupInitialPositions() {
-//       this.cutoutImages.forEach((img, index) => {
-//         img.dataset.initialTop = img.offsetTop;
-//         img.dataset.initialLeft = img.offsetLeft;
-//       });
-//     }
-  
-//     handleScroll() {
-//       const scrollTop = window.pageYOffset;
-//       const viewportHeight = window.innerHeight;
-//       const scrollProgress = scrollTop / viewportHeight;
-//       const maxScroll = this.settings.maxMove / 100; 
-  
-     
-//       const mainImageMove = Math.min(scrollTop * 0.3, viewportHeight * 0.3);
-//       this.mainImage.style.transform = `translate3d(0, ${mainImageMove}px, 0)`;
-  
-     
-//       this.cutoutImages.forEach((img, index) => {
-//         const startPoint = this.settings.startOffset + (index * this.settings.imageOffset);
+    calculateScrollProgress() {
+        const rect = this.projectSection.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
         
-//         if (scrollProgress > startPoint) {
-          
-//           const progressSinceStart = Math.min(
-//             (scrollProgress - startPoint) / this.settings.imageOffset,
-//             maxScroll
-//           );
-          
-          
-//           const moveX = this.settings.diagonalStrength * (index + 1) * progressSinceStart;
-//           const moveY = this.settings.diagonalStrength * (index + 1) * progressSinceStart;
-          
-          
-//           const scale = 1 - (index * this.settings.scaleRange);
-//           img.style.transform = `
-//             translate3d(${moveX}px, ${moveY}px, 0) 
-//             scale(${scale})
-//           `;
-//           img.style.opacity = Math.min(progressSinceStart * 2, 1);
-//         } else {
-//           img.style.transform = 'translate3d(0, 0, 0) scale(1)';
-//           img.style.opacity = 0;
-//         }
-//       });
-//     }
-//   }
-  
-//   // Initialize when the DOM is ready
-//   document.addEventListener('DOMContentLoaded', () => {
-//     new ImageAnimationController();
-//   });
+        // Calculate progress between 0 and 1
+        const progress = 1 - (rect.top / viewportHeight);
+        return Math.max(0, Math.min(progress * this.settings.scrollSensitivity, 1));
+    }
+
+    lerp(start, end, factor) {
+        return start + (end - start) * factor;
+    }
+
+    animateCutoutImages() {
+        this.progress = this.lerp(this.progress, this.targetProgress, this.settings.lerpFactor);
+
+        this.cutoutImages.forEach((img, index) => {
+            const imageSettings = this.settings.cutoutImages[index];
+
+            // Calculate smooth translations
+            const translateX = this.progress * imageSettings.maxTranslate.x;
+            const translateY = this.progress * imageSettings.maxTranslate.y;
+
+            // Calculate opacity (fade in)
+            const opacity = Math.min(this.progress * 2, 1);
+
+            // Apply transformations smoothly
+            img.style.transform = `
+                translate(
+                    calc(-50% + ${imageSettings.initialOffset.x + translateX}px), 
+                    calc(-50% + ${imageSettings.initialOffset.y + translateY}px)
+                )
+            `;
+            img.style.opacity = opacity;
+        });
+
+        requestAnimationFrame(() => this.animateCutoutImages()); // Smooth transition loop
+    }
+
+    init() {
+        // Initial styles
+        this.cutoutImages.forEach((img, index) => {
+            const imageSettings = this.settings.cutoutImages[index];
+            img.style.transform = `
+                translate(
+                    calc(-50% + ${imageSettings.initialOffset.x}px), 
+                    calc(-50% + ${imageSettings.initialOffset.y}px)
+                )
+            `;
+            img.style.opacity = 0;
+        });
+
+        // Scroll listener
+        window.addEventListener('scroll', () => {
+            this.targetProgress = this.calculateScrollProgress();
+        });
+
+        this.animateCutoutImages(); // Start animation loop
+    }
+}
+
+// Initialize the animation when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const projectSection = document.querySelector('.project-section');
+    if (projectSection) {
+        new UberProjectScrollAnimation(projectSection);
+    }
+});
