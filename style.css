@@ -71,6 +71,7 @@ body {
 .header:hover .o, .header:hover .n {
     color: #CB3100;
     animation: shake 0.4s ease-in-out infinite alternate;
+    filter: blur(5px);
 }
 
 
@@ -150,18 +151,9 @@ body {
 
 
 
-.image-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    pointer-events: none;
-    
-}
+
+
+
 
 .image-container .wrench {
     position: absolute;
@@ -174,25 +166,46 @@ body {
 .image-container .screw {
     position: absolute;
     top: 400px;
-    right: 0;
-    scale: 0.95;
+    right: -10px;
+    scale: 0.9;
     z-index: -2;
 }
 
+.image-container {
+    position: relative;  /* This allows it to move with the page initially */
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    transition: top 0.5s ease-in-out;
+}
+
+/* Fix position when scrolling down */
+.image-container.fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Styling for images */
 .image-container img {
     width: auto;
     height: auto;
     max-height: 100vh;
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    pointer-events: auto;
+    transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
+/* Fade-in effect when scrolling */
 .image-container img.appear {
-    opacity: 0.95;
+    opacity: 1;
     transform: translateY(0);
+    pointer-events:auto;
 }
+
 
 .image-container img:hover {
     filter: blur(10px);

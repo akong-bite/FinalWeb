@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Ensure the video always plays on each refresh
     sessionStorage.removeItem("videoPlayed");
 
-    // Create video element
     const videoContainer = document.createElement("div");
     videoContainer.style.position = "fixed";
     videoContainer.style.top = "0";
@@ -25,29 +23,45 @@ document.addEventListener("DOMContentLoaded", function () {
     videoContainer.appendChild(video);
     document.body.appendChild(videoContainer);
 
-    // Play video when user clicks the page
     videoContainer.addEventListener("click", function () {
         video.play();
     });
 
-    // Remove video after it finishes and reveal the index page with transitions
     video.onended = function () {
-        document.body.removeChild(videoContainer); // Remove the video container
-        document.body.style.overflow = "auto"; // Enable scrolling
+        document.body.removeChild(videoContainer);
+        document.body.style.overflow = "auto";
 
-        // Add a class to trigger CSS animations
         document.querySelector(".headcontainer").classList.add("fade-in");
-    };
-});
 
-// Simple scroll-based fade-in effect for images
-window.addEventListener("scroll", function () {
-    document.querySelectorAll(".image-container img").forEach((img) => {
-        if (img.getBoundingClientRect().top < window.innerHeight * 0.9) {
-            img.classList.add("appear");
+        fadeInImages();
+    };
+
+    function fadeInImages() {
+        document.querySelectorAll(".image-container img").forEach((img) => {
+            const rect = img.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.9) {
+                img.classList.add("appear");
+            }
+        });
+    }
+
+    setTimeout(fadeInImages, 100);
+    window.addEventListener("scroll", fadeInImages);
+
+    // Fix the image-container position after scrolling a bit
+    window.addEventListener("scroll", function () {
+        const scrollY = window.scrollY;
+        const imageContainer = document.querySelector(".image-container");
+
+        if (scrollY > 150) {
+            imageContainer.classList.add("fixed");
+        } else {
+            imageContainer.classList.remove("fixed");
         }
     });
 });
+
+
 
 
 
