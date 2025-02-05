@@ -38,28 +38,28 @@ class ImageAnimationController {
       const scrollTop = window.pageYOffset;
       const viewportHeight = window.innerHeight;
       const scrollProgress = scrollTop / viewportHeight;
-      const maxScroll = this.settings.maxMove / 100; // Convert percentage to decimal
+      const maxScroll = this.settings.maxMove / 100; 
   
-      // Subtle parallax for main image
+     
       const mainImageMove = Math.min(scrollTop * 0.3, viewportHeight * 0.3);
       this.mainImage.style.transform = `translate3d(0, ${mainImageMove}px, 0)`;
   
-      // Animate cutout images
+     
       this.cutoutImages.forEach((img, index) => {
         const startPoint = this.settings.startOffset + (index * this.settings.imageOffset);
         
         if (scrollProgress > startPoint) {
-          // Calculate bounded movement
+          
           const progressSinceStart = Math.min(
             (scrollProgress - startPoint) / this.settings.imageOffset,
             maxScroll
           );
           
-          // Calculate diagonal movement with bounds
+          
           const moveX = this.settings.diagonalStrength * (index + 1) * progressSinceStart;
           const moveY = this.settings.diagonalStrength * (index + 1) * progressSinceStart;
           
-          // Apply bounded transform
+          
           const scale = 1 - (index * this.settings.scaleRange);
           img.style.transform = `
             translate3d(${moveX}px, ${moveY}px, 0) 

@@ -1,42 +1,132 @@
-.container {
-    position: relative;
-    height: 150vh; /* This sets a fixed height for the scrollable area */
-    overflow: hidden;
-  }
-  
-  .main-image-wrapper {
-    position: sticky;
-    top: 0;
-    width: 100%;
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000000;
+    color: #FCFBF6;
+    margin: 10px 0 10px 0;
+    
+}
+
+
+
+/* Container styles */
+.headcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
-    overflow: hidden;
-  }
-  
-  .main-image {
+    position: relative;
+    padding: 50px;
+    z-index: 1;
+}
+
+/* Header styles */
+.header {
+    width: 90%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+}
+
+.an, .kong {
+    font-size: 330px;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0; 
+}
+
+.an {
+    color: #FCFBF6;
+    position: absolute;
+    
+    left: 10px;
+}
+
+.kong {
+    font-size: 330px;
+    font-weight: 900;
+    color: #CB3100;
+}
+
+
+.findme {
+    color: #CB3100;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0; 
+}
+
+.header p {
+    font-size: 18px;
+    font-weight: 400;
+    color: #FCFBF6;
+    line-height: 1;
+    margin: 0; 
+}
+
+/* Sections styles */
+.sections {
+    position: absolute;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    will-change: transform;
-    transition: transform 0.3s ease-out;
-  }
-  
-  .cutout-container {
+    top: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.section h2 {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -2.2%;
+    margin-bottom: 20px;
+}
+
+.section:nth-child(1) {
+    position: absolute;
+    left: 80px;
+}
+
+.section:nth-child(2) {
+    position: absolute;
+    right: 150px;
+}
+
+.section:nth-child(3) {
+    position: absolute;
+    top: 850px;
+    left:46%
+    
+}
+
+.image-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh; /* This ensures cutout images stay within viewport height */
-    pointer-events: none; /* Prevents images from interfering with scrolling */
-  }
-  
-  .cutout-image {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+.image-container .wrench {
     position: absolute;
-    width: 140px;
+    top: 300px;
+    left: 0;
+}
+
+.image-container .screw {
+    position: absolute;
+    top: 380px;
+    right: 0;
+}
+
+.image-container img {
+    width: auto;
     height: auto;
-    opacity: 0;
-    will-change: transform, opacity;
-    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+    max-height: 100vh;
+    opacity: 0.8;
+}
